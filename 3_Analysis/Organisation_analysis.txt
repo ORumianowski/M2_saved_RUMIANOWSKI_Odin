@@ -1,0 +1,5 @@
+
+
+Les fichiers du dossier permettent de refaire les analyses et les plots des résultats.
+
+ATTENTION: Les output du modèle sont contenu dans le dossier 'data'. En cas de modification, les output doivent être remplacé manuellement.

@@ -1,0 +1,569 @@
+---
+title: ""
+author: "Odin Rumianowski"
+date: "2024"
+output:
+  pdf_document:
+    toc: true
+  html_document:
+    toc: true
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(MCMCvis)
+library(knitr)
+library(patchwork)
+library(hrbrthemes)
+library(scales)
+library(tidyquant)
+library(ggthemes)
+library(ggdist)
+library(ggrepel)
+library(kableExtra)
+```
+
+
+
+```{r}
+load(file = "data/period_1234/out1_p1_v15_5_p1_4.Rda")
+output1= out1
+load(file = "data/period_1234/out1_p1_v15_5_p2_4.Rda")
+output2= out1
+load(file = "data/period_1234/out1_p1_v15_5_p3_4.Rda")
+output3= out1
+load(file = "data/period_1234/out1_p1_v15_5_p4_4.Rda")
+output4= out1
+```
+
+
+```{r}
+definitions = c(
+              "Mean survival of adults", 
+              "Standard deviation survival of adults", 
+              
+              "Mean survival during the first year",
+              "Standard deviation survival during the first year",
+  
+              "Number of female fledging per pair in LR", 
+              "Number of female fledging per pair in SAT",
+              
+              "Breeding fidelity in LR",
+              "Breeding fidelity in MA" , 
+              "Breeding fidelity in VE",
+              "Breeding fidelity in V5", 
+              
+              "Breeding fidelity in VS",
+              "Breeding fidelity in LA" , 
+              "Breeding fidelity in SV",
+              "Breeding fidelity in WV", 
+              "Breeding fidelity in SZ", 
+              
+              "Breeding fidelity in AE1",
+              "Breeding fidelity in AE2",
+              
+              "Natal fidelity in LR",
+              "Natal fidelity in MA" , 
+              "Natal fidelity in VE",
+              "Natal fidelity in V5", 
+              
+              "Natal fidelity in VS",
+              "Natal fidelity in LA" , 
+              "Natal fidelity in SV",
+              "Natal fidelity in WV", 
+              "Natal fidelity in SZ", 
+              
+              "Natal fidelity in AE1",
+              "Natal fidelity in AE2"
+
+              )
+```
+
+
+```{r}
+estimate_p1 = c(      output1$mean$mean_phi[2],
+                  output1$mean$sigma_phi[2],
+                  
+                  output1$mean$mean_phi[1], 
+                  output1$mean$sigma_phi[1], 
+                  
+                  output1$mean$rho[1],
+                  output1$mean$rho[2], 
+                  
+                  output1$mean$breedingfidelity[1],
+                  output1$mean$breedingfidelity[2],
+                  output1$mean$breedingfidelity[3],
+                  output1$mean$breedingfidelity[4],
+
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  
+                  output1$mean$breedingfidelity[5],
+                  NA,
+                  
+                  output1$mean$natalfidelity[1],
+                  output1$mean$natalfidelity[2],
+                  output1$mean$natalfidelity[3],
+                  output1$mean$natalfidelity[4],
+                  
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  
+                  output1$mean$natalfidelity[5],
+                  NA
+
+                  ) %>% 
+  round(., 2)
+
+```
+
+
+```{r}
+borne_inf_p1 = c( output1$q2.5$mean_phi[2],
+                  output1$q2.5$sigma_phi[2],
+                  
+                  output1$q2.5$mean_phi[1], 
+                  output1$q2.5$sigma_phi[1], 
+                  
+                  output1$q2.5$rho[1],
+                  output1$q2.5$rho[2], 
+                  
+                  output1$q2.5$breedingfidelity[1],
+                  output1$q2.5$breedingfidelity[2],
+                  output1$q2.5$breedingfidelity[3],
+                  output1$q2.5$breedingfidelity[4],
+
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  
+                  output1$q2.5$breedingfidelity[5],
+                  NA,
+                  
+                  output1$q2.5$natalfidelity[1],
+                  output1$q2.5$natalfidelity[2],
+                  output1$q2.5$natalfidelity[3],
+                  output1$q2.5$natalfidelity[4],
+                  
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  
+                  output1$q2.5$natalfidelity[5],
+                  NA
+
+                  ) %>% 
+  round(., 2)
+
+```
+
+```{r}
+borne_sup_p1 = c( output1$q97.5$mean_phi[2],
+                  output1$q97.5$sigma_phi[2],
+                  
+                  output1$q97.5$mean_phi[1], 
+                  output1$q97.5$sigma_phi[1], 
+                  
+                  output1$q97.5$rho[1],
+                  output1$q97.5$rho[2], 
+                  
+                  output1$q97.5$breedingfidelity[1],
+                  output1$q97.5$breedingfidelity[2],
+                  output1$q97.5$breedingfidelity[3],
+                  output1$q97.5$breedingfidelity[4],
+
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  
+                  output1$q97.5$breedingfidelity[5],
+                  NA,
+                  
+                  output1$q97.5$natalfidelity[1],
+                  output1$q97.5$natalfidelity[2],
+                  output1$q97.5$natalfidelity[3],
+                  output1$q97.5$natalfidelity[4],
+                  
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  NA,
+                  
+                  output1$q97.5$natalfidelity[5],
+                  NA
+
+                  ) %>% 
+  round(., 2)
+
+```
+
+
+```{r}
+estimate_p3 = c(  output3$mean$mean_phi[2],
+                  output3$mean$sigma_phi[2],
+                  
+                  output3$mean$mean_phi[1], 
+                  output3$mean$sigma_phi[1], 
+                  
+                  output3$mean$rho[1],
+                  output3$mean$rho[2], 
+                  
+                  output3$mean$breedingfidelity[1],
+                  output3$mean$breedingfidelity[2],
+                  NA,
+                  NA,
+                  output3$mean$breedingfidelity[3],
+                  output3$mean$breedingfidelity[4],
+                  output3$mean$breedingfidelity[5],
+                  output3$mean$breedingfidelity[6],
+                  NA,
+
+                  NA,
+                  output3$mean$breedingfidelity[7],
+  
+                  
+                  output3$mean$natalfidelity[1],
+                  output3$mean$natalfidelity[2],
+                  NA,
+                  NA,
+                  output3$mean$natalfidelity[3],
+                  output3$mean$natalfidelity[4],
+                  output3$mean$natalfidelity[5],
+                  output3$mean$natalfidelity[6],
+                   NA,
+
+
+                  NA,
+                  output3$mean$natalfidelity[7]
+
+                  ) %>% 
+  round(., 2)
+
+```
+
+
+```{r}
+borne_sup_p3 = c(  output3$q97.5$mean_phi[2],
+                  output3$q97.5$sigma_phi[2],
+                  
+                  output3$q97.5$mean_phi[1], 
+                  output3$q97.5$sigma_phi[1], 
+                  
+                  output3$q97.5$rho[1],
+                  output3$q97.5$rho[2], 
+                  
+                  output3$q97.5$breedingfidelity[1],
+                  output3$q97.5$breedingfidelity[2],
+                  NA,
+                  NA,
+                  output3$q97.5$breedingfidelity[3],
+                  output3$q97.5$breedingfidelity[4],
+                  output3$q97.5$breedingfidelity[5],
+                  output3$q97.5$breedingfidelity[6],
+                  NA,
+
+                  NA,
+                  output3$q97.5$breedingfidelity[7],
+  
+                  
+                  output3$q97.5$natalfidelity[1],
+                  output3$q97.5$natalfidelity[2],
+                  NA,
+                  NA,
+                  output3$q97.5$natalfidelity[3],
+                  output3$q97.5$natalfidelity[4],
+                  output3$q97.5$natalfidelity[5],
+                  output3$q97.5$natalfidelity[6],
+                   NA,
+
+
+                  NA,
+                  output3$q97.5$natalfidelity[7]
+
+                  ) %>% 
+  round(., 2)
+
+```
+
+
+
+
+```{r}
+borne_inf_p3 = c(  output3$q2.5$mean_phi[2],
+                  output3$q2.5$sigma_phi[2],
+                  
+                  output3$q2.5$mean_phi[1], 
+                  output3$q2.5$sigma_phi[1], 
+                  
+                  output3$q2.5$rho[1],
+                  output3$q2.5$rho[2], 
+                  
+                  output3$q2.5$breedingfidelity[1],
+                  output3$q2.5$breedingfidelity[2],
+                  NA,
+                  NA,
+                  output3$q2.5$breedingfidelity[3],
+                  output3$q2.5$breedingfidelity[4],
+                  output3$q2.5$breedingfidelity[5],
+                  output3$q2.5$breedingfidelity[6],
+                  NA,
+
+                  NA,
+                  output3$q2.5$breedingfidelity[7],
+  
+                  
+                  output3$q2.5$natalfidelity[1],
+                  output3$q2.5$natalfidelity[2],
+                  NA,
+                  NA,
+                  output3$q2.5$natalfidelity[3],
+                  output3$q2.5$natalfidelity[4],
+                  output3$q2.5$natalfidelity[5],
+                  output3$q2.5$natalfidelity[6],
+                   NA,
+
+
+                  NA,
+                  output3$q2.5$natalfidelity[7]
+
+                  ) %>% 
+  round(., 2)
+
+```
+
+
+
+```{r}
+borne_inf_p4 = c(  output4$q2.5$mean_phi[2],
+                  output4$q2.5$sigma_phi[2],
+                  
+                  output4$q2.5$mean_phi[1], 
+                  output4$q2.5$sigma_phi[1], 
+                  
+                  output4$q2.5$rho[1],
+                  output4$q2.5$rho[2], 
+                  
+                  output4$q2.5$breedingfidelity[1],
+                  output4$q2.5$breedingfidelity[2],
+                  NA,
+                  NA,
+                  output4$q2.5$breedingfidelity[3],
+                  output4$q2.5$breedingfidelity[4],
+                  output4$q2.5$breedingfidelity[5],
+                  output4$q2.5$breedingfidelity[6],
+                  output4$q2.5$breedingfidelity[7],
+
+                  NA,
+                  output4$q2.5$breedingfidelity[8],
+  
+                  
+                  output4$q2.5$natalfidelity[1],
+                  output4$q2.5$natalfidelity[2],
+                  NA,
+                  NA,
+                  output4$q2.5$natalfidelity[3],
+                  output4$q2.5$natalfidelity[4],
+                  output4$q2.5$natalfidelity[5],
+                  output4$q2.5$natalfidelity[6],
+                  output4$q2.5$natalfidelity[7],
+
+
+                  NA,
+                  output4$q2.5$natalfidelity[8]
+
+                  ) %>% 
+  round(., 2)
+
+```
+
+```{r}
+estimate_p4  = c(  output4$mean$mean_phi[2],
+                  output4$mean$sigma_phi[2],
+                  
+                  output4$mean$mean_phi[1], 
+                  output4$mean$sigma_phi[1], 
+                  
+                  output4$mean$rho[1],
+                  output4$mean$rho[2], 
+                  
+                  output4$mean$breedingfidelity[1],
+                  output4$mean$breedingfidelity[2],
+                  NA,
+                  NA,
+                  output4$mean$breedingfidelity[3],
+                  output4$mean$breedingfidelity[4],
+                  output4$mean$breedingfidelity[5],
+                  output4$mean$breedingfidelity[6],
+                  output4$mean$breedingfidelity[7],
+
+                  NA,
+                  output4$mean$breedingfidelity[8],
+  
+                  
+                  output4$mean$natalfidelity[1],
+                  output4$mean$natalfidelity[2],
+                  NA,
+                  NA,
+                  output4$mean$natalfidelity[3],
+                  output4$mean$natalfidelity[4],
+                  output4$mean$natalfidelity[5],
+                  output4$mean$natalfidelity[6],
+                  output4$mean$natalfidelity[7],
+
+
+                  NA,
+                  output4$mean$natalfidelity[8]
+
+                  ) %>% 
+  round(., 2)
+
+```
+
+```{r}
+borne_sup_p4 = c(  output4$q97.5$mean_phi[2],
+                  output4$q97.5$sigma_phi[2],
+                  
+                  output4$q97.5$mean_phi[1], 
+                  output4$q97.5$sigma_phi[1], 
+                  
+                  output4$q97.5$rho[1],
+                  output4$q97.5$rho[2], 
+                  
+                  output4$q97.5$breedingfidelity[1],
+                  output4$q97.5$breedingfidelity[2],
+                  NA,
+                  NA,
+                  output4$q97.5$breedingfidelity[3],
+                  output4$q97.5$breedingfidelity[4],
+                  output4$q97.5$breedingfidelity[5],
+                  output4$q97.5$breedingfidelity[6],
+                  output4$q97.5$breedingfidelity[7],
+
+                  NA,
+                  output4$q97.5$breedingfidelity[8],
+  
+                  
+                  output4$q97.5$natalfidelity[1],
+                  output4$q97.5$natalfidelity[2],
+                  NA,
+                  NA,
+                  output4$q97.5$natalfidelity[3],
+                  output4$q97.5$natalfidelity[4],
+                  output4$q97.5$natalfidelity[5],
+                  output4$q97.5$natalfidelity[6],
+                  output4$q97.5$natalfidelity[7],
+
+
+                  NA,
+                  output4$q97.5$natalfidelity[8]
+
+                  ) %>% 
+  round(., 2)
+
+```
+
+```{r}
+table_parameters = cbind(
+                         estimate_p1, borne_inf_p1, borne_sup_p1,
+                         estimate_p3, borne_inf_p3, borne_sup_p3,
+                         estimate_p4, borne_inf_p4, borne_sup_p4) %>% 
+  format(., nsmall = 2)
+```
+
+
+```{r}
+
+table_1 = cbind(definitions,table_parameters)
+
+
+table_full = table_1 %>% 
+  as.data.frame() %>% 
+  mutate(inter_p1 = paste0("[",borne_inf_p1,",", borne_sup_p1, "]"),
+         inter_p3 = paste0("[",borne_inf_p3,",", borne_sup_p3, "]"),
+         inter_p4 = paste0("[",borne_inf_p4,",", borne_sup_p4, "]")) %>% 
+  select(definitions,
+         estimate_p1,inter_p1,
+         estimate_p3,inter_p3,
+         estimate_p4,inter_p4
+         )
+```
+
+
+```{r}
+table = table_full %>% 
+  subset( definitions %in% c("Mean survival of adults", 
+              "Standard deviation survival of adults", 
+              
+              "Mean survival during the first year",
+              "Standard deviation survival during the first year",
+  
+              "Number of female fledging per pair in LR", 
+              "Number of female fledging per pair in SAT",
+              
+              "Breeding fidelity in LR",
+              "Breeding fidelity in MA" , 
+              
+              "Natal fidelity in LR",
+              "Natal fidelity in MA"  ))
+
+colnames(table) = c("Definitions",
+                    "Est.", "CI (95%)",
+                    "Est.", "CI (95%)",
+                    "Est.", "CI (95%)")
+
+row.names(table) <- NULL
+```
+
+
+```{r}
+# table
+# 
+# data.frame(Notation = c("\u03B1", "\u03C6", "\u03C3", "\u03C1", "\u03BD", "\u03B7"))
+# 
+# library(knitr)
+# data.frame( gg = c(expression(Sigma[5])))
+
+```
+
+
+
+```{r}
+table%>% 
+ kbl(.,booktabs=T,caption="Summary - CMR dataset") %>%
+ add_header_above(c("" ,"1986-2006" = 2 ,"2007-2010" = 2,"2010-2019" = 2  )) %>%
+ kable_styling(latex_options=c("scale_down")) %>%
+ column_spec(c(1), bold = T) 
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

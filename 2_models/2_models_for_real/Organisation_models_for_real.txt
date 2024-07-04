@@ -1,0 +1,5 @@
+
+
+v15 : ensemble des fichiers pour appliqué le dernier modèle SANS le bloc "fécondité"
+
+v16_fecuundity : ensemble des fichiers pour appliqué le dernier modèle AVEC le bloc "fécondité"

@@ -1,0 +1,9 @@
+
+
+models : dossier de stockage de fichiers de modèle utilisés par Jags
+
+main : fichier qui appelle les données nécessaires au modèle pour chaque période et applique le modèle. Le fichier produit des résultats indépendamment pour chaque période.
+
+preprocess : préparation des variables d'entrées au modèle pour Jags. Préparation identique à chaque période.
+
+write_model_v16_2 : fichier d'écriture du modèle. Le fichier texte produit doit être placé dans le dossier "models" pour son utilisation.

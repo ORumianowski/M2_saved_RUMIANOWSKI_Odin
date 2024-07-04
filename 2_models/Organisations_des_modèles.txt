@@ -1,0 +1,7 @@
+
+
+1_simulations : Ensemble des fichiers nécessaire au travail de simulation de données et à son analyse par le modèle
+
+
+2_models_for_real : Scripts de modèle appliqué sur chaque période 
+

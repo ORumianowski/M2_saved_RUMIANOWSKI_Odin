@@ -1,0 +1,7 @@
+
+
+simulated_dataset : dossier de stockage des fichiers de données simulées utilisés par le modèle 
+
+simulation : ensemble des fichier nécessaires pour créer les données simulées
+
+on_simul.R : fichier d'application du modèle aux données simulées

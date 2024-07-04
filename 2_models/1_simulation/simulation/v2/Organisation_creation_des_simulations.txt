@@ -1,0 +1,14 @@
+
+
+ringed_nest_for_simulation.Rda : fichier informant du nombre d'individus bagués par sites et par années dans le vrai jeux de données, utilisé dans la simulation pour avoir une structure proche.
+
+simul_survey_v3 : 2e fichier appelé. Il simule les données de comptage à partir du fichier model_parameters_v3
+
+simul_cmr_v3 : 3e fichier appelé. Il simule les données de CMR à partir du fichier model_parameters_v3
+
+model_parameters_v3 : 1er fichier appelé. Il contient l'ensemble des paramètres démographiques et observationnelles utilisés pour simuler les données
+
+generate_dataset : Il appele les trois fichiers model_parameters_v3, simul_cmr_v3 et simul_survey_v3 pour générer les données simulés (CMR et comptages)
+
+
+

@@ -1,0 +1,13 @@
+
+
+0_datasets : ensemble des fichiers de données brutes
+
+1_formatage : ensemble des fichiers de prétraitement des données (CRM, Survey, fecundity) avant l'application du modèle. 
+
+2_models : ensemble des scripts de modèle avec ou sans le submodèle associé à la fécondité
+
+3_Analysis : ensemble des scripts nécessaires aux résultats et leurs plots/annexes
+
+4_Materials_Methods : ensemble des scripts nécessaires aux tables et figures du materials and methods
+
+5_Final_documents : rapport de stage et diapo de soutenance

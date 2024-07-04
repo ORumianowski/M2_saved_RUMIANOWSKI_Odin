@@ -1,0 +1,6 @@
+
+Inkscape: le dossier contient les fichiers nécessaires pour le DAG et le life graph du modèle
+
+carte : fichier nécessaire à la création de la carte des colonies
+
+materials : fichier nécessaire au tableau de codification des états CMR et du summary des captures présentés dans le rapport.

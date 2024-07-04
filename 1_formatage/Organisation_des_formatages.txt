@@ -1,0 +1,9 @@
+
+
+formatage_cmr : Fichier de construction des CH et des m-array. Chaque période a son propre ficher de prétraitement.
+
+formatage_fecundity : Fichier de préparation des données de fécondité pour le modèle. Chaque période a son propre ficher de prétraitement.
+
+formatage_survey : Fichier de préparation des données de comptage. L'ensemble des périodes sont traiter dans le même fichier.
+
+real_dataset : dossier de stockage des fichiers (CMR, m-array, Survey, Fecundity) utilisés par le modèle

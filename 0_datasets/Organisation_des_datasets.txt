@@ -1,0 +1,7 @@
+
+
+dataset_28032024 : données brutes de CMR
+
+Effectif baguage : effectif de baguage, utilisé pour avoir la même structure de données au sein des simulations
+
+survey_post_2008_150424 : données brutes de comptages et de fécondité
